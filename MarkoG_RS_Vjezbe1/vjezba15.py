@@ -11,7 +11,3 @@ def count_vowels_consonants(text: str) -> dict:
                 consonant_count += 1
 
     return {"vowels": vowel_count, "consonants": consonant_count}
-
-
-rezultat = count_vowels_consonants("Python je programski jezik koji je jednostavan za ucenje i koristenje, Python je vrlo popularan.")
-print(rezultat)
