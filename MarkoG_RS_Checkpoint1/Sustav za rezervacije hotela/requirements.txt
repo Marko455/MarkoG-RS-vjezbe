@@ -1,0 +1,8 @@
+Python 3.8 ili novije
+izraditi novi python conda virtualno okruženje
+Nisu potreben vanjske biblioteke, SQL Lite je intergriran u sam Python
+Potrebne datoteke za rad aplikacije:
+1. SZRH_aplikacija/core/services.py
+2. SZRH_aplikacija/data/models.py
+3. SZRH_aplikacija/data/storage.py
+4. SZRH_aplikacija/main.py
