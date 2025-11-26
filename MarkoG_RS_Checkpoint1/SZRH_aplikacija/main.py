@@ -1,124 +1,129 @@
-import asyncio
-from data.storage import init_db, load_hotels, save_hotel, save_room
-from core.services import book_room, release_room, find_available_room
-from data.models import Hotel, HotelRoom
+# main.py
+from data.models import HotelRoom, ispis
+from data.storage import (
+    init_db,
+    unesi_sobu,
+    ispisi_sve_sobe,
+    pronadi_sobu,
+    izradi_rezervaciju,
+    zatvori_rezervaciju,
+    oslobodi_sobu,
+    ispis_povijesti_rez
+)
 
+# ---------------------- Inicijalne hotelske sobe za testiranje ----------------------
 
-async def list_hotels(hotels):
-    print("\n--- HOTELI ---")
-    for idx, hotel in enumerate(hotels):
-        print(f"{idx + 1}. {hotel.name} ({hotel.address}) - {len(hotel.rooms)} rooms")
+def seed_rooms():
+    rooms = [
+        HotelRoom(101, "Single", 120),
+        HotelRoom(102, "Double", 150),
+        HotelRoom(103, "Double", 160),
+        HotelRoom(201, "Suite", 260),
+    ]
+    for room in rooms:
+        unesi_sobu(room)
 
+# ---------------------- Funkcija filtriranje soba, dali bile slobodne ili po vrsti ----------------------
 
-async def list_available_rooms(hotel):
-    print(f"\n--- Slobodne sobe {hotel.name} ---")
-    available = [r for r in hotel.rooms if r.is_available]
+def filter_rooms():
+    rooms = ispisi_sve_sobe()
+    print("\nFiltriraj po:")
+    print("1) Zauzetosti")
+    print("2) Tipu")
+    print("3) Maksimalnoj cijeni")
+    print("4) Odustani")
 
-    if not available:
-        print("Nema slobodnih soba.")
+    option = input("Vas odabir: ")
+
+    if option == "1":
+        rooms = [r for r in rooms if r.is_available]
+    elif option == "2":
+        t = input("Unesite tip (Single/Double/Suite): ")
+        rooms = [r for r in rooms if r.room_type.lower() == t.lower()]
+    elif option == "3":
+        price = float(input("Unesite maksimalnu cijenu: "))
+        rooms = [r for r in rooms if r.price_per_night <= price]
     else:
-        for idx, room in enumerate(available):
-            print(f"{idx + 1}. Room {room.room_number} - {room.room_type} - ${room.price_per_night}")
+        return
+
+    ispis(rooms)
 
 
-async def run_app():
+# ---------------------- Korisničko sučelje ----------------------
+
+def main():
     init_db()
-
-    print("Ucitavanje hotela...")
-    hotels = load_hotels()
-
-    if not hotels:
-
-        hotel = Hotel()
-        hotel.name = "Grand Plaza"
-        hotel.address = "123 Main Street"
-        hotel.rating = 5
-        hotel.num_rooms = 2
-
-        hotel_id = save_hotel(hotel)
-
-        room1 = HotelRoom()
-        room1.room_number = 101
-        room1.room_type = "Single"
-        room1.price_per_night = 100
-
-        room2 = HotelRoom()
-        room2.room_number = 102
-        room2.room_type = "Double"
-        room2.price_per_night = 150
-
-        save_room(hotel_id, room1)
-        save_room(hotel_id, room2)
-
-        hotels = load_hotels()
-
+    seed_rooms()
 
     while True:
-        print("\n======================")
-        print("SISTEM REZERVIRANJA HOTELSKIH SOBA")
-        print("======================")
-        print("1. Izlistaj popis hotela")
-        print("2. Provjeri slobodne sobe")
-        print("3. Rezerviraj sobu")
-        print("4. Oslobodi sobu")
-        print("5. Izadi")
-        choice = input("Odaberite izbor: ")
+        print("\n Hotelski sistem rezervacija soba")
+        print("1. Pregled soba")
+        print("2. Rezerviranje sobe")
+        print("3. Oslobadanje sobe")
+        print("4. Povijest rezerviranja")
+        print("5. Filtriranje soba")
+        print("6. Izlaz")
+
+        choice = input("> ")
 
         if choice == "1":
-            await list_hotels(hotels)
+            ispis(ispisi_sve_sobe())
 
         elif choice == "2":
-            await list_hotels(hotels)
-            h = int(input("Izaberite hotelski broj: ")) - 1
-            await list_available_rooms(hotels[h])
-
-        elif choice == "3":
-            await list_hotels(hotels)
-            h = int(input("Izaberite hotelski broj: ")) - 1
-            hotel = hotels[h]
-
-            await list_available_rooms(hotel)
-            rnum = int(input("Unesite broj sobe koje zelite rezervirati: "))
-
-            # Find the actual room
-            room = next((x for x in hotel.rooms if x.room_number == rnum), None)
-
-            if room and room.is_available:
-                await book_room(room)
-                print(f"Soba {room.room_number} je uspijesno rezervirana!")
-            else:
-                print("Pogresan izbor ili je soba vec rezervirana.")
-
-        elif choice == "4":
-            await list_hotels(hotels)
-            h = int(input("Izaberite hotelski broj: ")) - 1
-            hotel = hotels[h]
-
-            print("\n--- REZERVIRANE SOBE ---")
-            booked = [r for r in hotel.rooms if not r.is_available]
-
-            if not booked:
-                print("Nema rezerviranih soba.")
+            try:
+                room_num = int(input("Broj sobe: "))
+                guest = input("Ime gosta: ")
+            except:
+                print("Krivi unos.")
                 continue
 
-            for room in booked:
-                print(f"Soba {room.room_number}")
+            room = pronadi_sobu(room_num)
 
-            rnum = int(input("Unesite broj sobe za osloboditi: "))
-
-            room = next((x for x in hotel.rooms if x.room_number == rnum), None)
-
-            if room and not room.is_available:
-                await release_room(room)
-                print(f"Soba {room.room_number} je oslobodena!")
+            if not room:
+                print("Soba nije pronadena.")
+            elif not room.is_available:
+                print("Soba je vec rezervirana.")
             else:
-                print("Krivi izbor.")
+                izradi_rezervaciju(room_num, guest)
+                oslobodi_sobu(room_num, False)
+                print(f"Rezervirana soba: {room_num} za {guest}.")
+
+        elif choice == "3":
+            try:
+                room_num = int(input("Broj sobe: "))
+            except:
+                print("Krivi unos.")
+                continue
+
+            room = pronadi_sobu(room_num)
+
+            if not room:
+                print("Soba ne postoji u sistemu.")
+            elif room.is_available:
+                print("Soba je vec oslobodena.")
+            else:
+                zatvori_rezervaciju(room_num)
+                oslobodi_sobu(room_num, True)
+                print("Soba oslobodena.")
+
+        elif choice == "4":
+            history = ispis_povijesti_rez()
+            print("\n Povijest rezerviranja")
+            for r in history:
+                print(f"[{r.reservation_id}] "
+                      f"Soba {r.room_number} | Gost {r.guest_name} | "
+                      f"Pocetak {r.check_in} | Kraj {r.check_out}")
 
         elif choice == "5":
+            filter_rooms()
+
+        elif choice == "6":
             print("Dovidenja!")
             break
 
         else:
-            print("Pogresan izbor.")
+            print("Krivi izbor")
 
-asyncio.run(run_app())
+
+if __name__ == "__main__":
+    main()

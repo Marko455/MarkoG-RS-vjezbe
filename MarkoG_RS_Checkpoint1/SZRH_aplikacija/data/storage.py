@@ -1,113 +1,108 @@
+# storage.py
 import sqlite3
-from data.models import Hotel, HotelRoom
+from datetime import datetime
+from data.models import HotelRoom, Reservation
 
-DB_PATH = "hotel_data.db"
+DB_NAME = "hotel.db"
 
+# --------------------- Kod za incijalizaciju baze podataka ----------------------
 def init_db():
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
 
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS hotels (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            address TEXT,
-            rating INTEGER,
-            num_rooms INTEGER
-        )
-    """)
-
-    cursor.execute("""
+    c.execute("""
         CREATE TABLE IF NOT EXISTS rooms (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            hotel_id INTEGER,
-            room_number INTEGER,
+            room_number INTEGER PRIMARY KEY,
             room_type TEXT,
             price_per_night REAL,
-            is_available INTEGER,
-            FOREIGN KEY (hotel_id) REFERENCES hotels(id)
+            is_available INTEGER
+        )
+    """)
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS reservations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            room_number INTEGER,
+            guest_name TEXT,
+            check_in TEXT,
+            check_out TEXT
         )
     """)
 
     conn.commit()
     conn.close()
 
-def save_hotel(hotel: Hotel):
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+# --------------------- Unos(rezerviranje) i brisanje(oslobađanje) hotelskih soba ----------------------
 
-    cursor.execute("""
-        INSERT INTO hotels (name, address, rating, num_rooms)
-        VALUES (?, ?, ?, ?)
-    """, (hotel.name, hotel.address, hotel.rating, hotel.num_rooms))
-
-    hotel_id = cursor.lastrowid
-
+def unesi_sobu(room: HotelRoom):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("""
+        INSERT OR IGNORE INTO rooms VALUES (?, ?, ?, ?)
+    """, (room.room_number, room.room_type, room.price_per_night, int(room.is_available)))
     conn.commit()
     conn.close()
 
-    return hotel_id
 
-def save_room(hotel_id: int, room: HotelRoom):
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+def ispisi_sve_sobe():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("SELECT * FROM rooms")
+    rows = c.fetchall()
+    conn.close()
 
-    cursor.execute("""
-        INSERT INTO rooms (hotel_id, room_number, room_type, price_per_night, is_available)
-        VALUES (?, ?, ?, ?, ?)
-    """, (
-        hotel_id,
-        room.room_number,
-        room.room_type,
-        room.price_per_night,
-        1 if room.is_available else 0,
-    ))
+    return [HotelRoom(*row) for row in rows]
 
+
+def pronadi_sobu(room_number):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("SELECT * FROM rooms WHERE room_number=?", (room_number,))
+    row = c.fetchone()
+    conn.close()
+    return HotelRoom(*row) if row else None
+
+
+def oslobodi_sobu(room_number, available):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute(
+        "UPDATE rooms SET is_available=? WHERE room_number=?",
+        (1 if available else 0, room_number)
+    )
     conn.commit()
     conn.close()
 
-def load_rooms(hotel_id: int):
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
 
-    cursor.execute("""
-        SELECT room_number, room_type, price_per_night, is_available
-        FROM rooms WHERE hotel_id = ?
-    """, (hotel_id,))
+# --------------------- Funkcije rezervacije ----------------------
 
-    rows = cursor.fetchall()
+def izradi_rezervaciju(room_number, guest_name):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("""
+        INSERT INTO reservations (room_number, guest_name, check_in, check_out)
+        VALUES (?, ?, ?, NULL)
+    """, (room_number, guest_name, datetime.now().isoformat()))
+    conn.commit()
     conn.close()
 
-    rooms = []
-    for r in rows:
-        room = HotelRoom()
-        room.room_number = r[0]
-        room.room_type = r[1]
-        room.price_per_night = r[2]
-        room.is_available = bool(r[3])
-        rooms.append(room)
 
-    return rooms
-
-def load_hotels():
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT id, name, address, rating, num_rooms FROM hotels")
-    rows = cursor.fetchall()
+def zatvori_rezervaciju(room_number):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("""
+        UPDATE reservations
+        SET check_out=?
+        WHERE room_number=? AND check_out IS NULL
+    """, (datetime.now().isoformat(), room_number))
+    conn.commit()
     conn.close()
 
-    hotels = []
 
-    for r in rows:
-        hotel = Hotel()
-        hotel.id = r[0]
-        hotel.name = r[1]
-        hotel.address = r[2]
-        hotel.rating = r[3]
-        hotel.num_rooms = r[4]
-        hotel.rooms = load_rooms(hotel.id)
+def ispis_povijesti_rez():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("SELECT * FROM reservations ORDER BY id DESC")
+    rows = c.fetchall()
+    conn.close()
 
-        hotels.append(hotel)
-
-    return hotels
+    return [Reservation(*row) for row in rows]
