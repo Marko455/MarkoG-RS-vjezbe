@@ -5,3 +5,4 @@ Potrebne datoteke za rad aplikacije:
 1. SZRH_aplikacija/data/models.py
 2. SZRH_aplikacija/data/storage.py
 3. SZRH_aplikacija/main.py
+4. SZRH_aplikacija/cli.py
