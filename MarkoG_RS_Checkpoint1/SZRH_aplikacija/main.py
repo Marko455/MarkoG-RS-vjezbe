@@ -1,4 +1,3 @@
-# main.py
 from data.models import HotelRoom, ispis
 from data.storage import (
     init_db,

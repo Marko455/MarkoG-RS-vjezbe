@@ -1,4 +1,3 @@
-# hotel.py
 class HotelRoom:
     def __init__(self, room_number, room_type, price_per_night, is_available=True):
         self.room_number = room_number
@@ -22,5 +21,3 @@ def ispis(rooms):
         status = "Available" if r.is_available else "Booked"
         print(f"- Room {r.room_number} | {r.room_type} | ${r.price_per_night}/night | {status}")
     print()
-
-

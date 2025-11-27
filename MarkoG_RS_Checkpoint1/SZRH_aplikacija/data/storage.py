@@ -1,9 +1,11 @@
-# storage.py
 import sqlite3
+import os
 from datetime import datetime
 from data.models import HotelRoom, Reservation
 
-DB_NAME = "hotel.db"
+BASE = os.path.dirname(os.path.abspath(__file__))
+DB_NAME = os.path.join(BASE, "hotel.db")
+#DB_NAME = "hotel.db"
 
 # --------------------- Kod za incijalizaciju baze podataka ----------------------
 def init_db():

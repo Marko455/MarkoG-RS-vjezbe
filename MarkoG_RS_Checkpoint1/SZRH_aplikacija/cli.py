@@ -1,8 +1,7 @@
-# gui.py
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 
-from data.models import ispis, HotelRoom
+from data.models import HotelRoom
 from data.storage import (
     ispisi_sve_sobe,
     pronadi_sobu,
