@@ -1,4 +1,6 @@
 Python 3.8 ili novije
+Node 20 ili novije
+Git
 izraditi novi python conda virtualno okruženje
 Nisu potreben vanjske biblioteke, SQL Lite je intergriran u sam Python
 Potrebne datoteke za rad aplikacije:
