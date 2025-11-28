@@ -18,14 +18,14 @@
   <a target="code" href="///C:/Users/marco/Documents/MarkoG-RS-vje-be/MarkoG_RS_Checkpoint1/SZRH_aplikacija/cli.py" type="text/plain"><tt>cli.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
-    <a href="#'data.storage'">'data.storage'</a>
+    <a href="#SZRH_aplikacija.data.models">SZRH_aplikacija.data.models</a>
+ &#8226;   <a href="#SZRH_aplikacija.data.storage">SZRH_aplikacija.data.storage</a>
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_weakrefset">_weakrefset</a>
  &#8226;   <a href="#abc">abc</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#copyreg">copyreg</a>
- &#8226;   <a href="#data">data</a>
  &#8226;   <a href="#encodings">encodings</a>
  &#8226;   <a href="#encodings.aliases">encodings.aliases</a>
  &#8226;   <a href="#encodings.ascii">encodings.ascii</a>
@@ -230,6 +230,7 @@ imported by:
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#selectors">selectors</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
  &#8226;   <a href="#typing">typing</a>
@@ -239,9 +240,63 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="'data.storage'"></a>
-  <a target="code" href="" type="text/plain"><tt>'data.storage'</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+  <a name="SZRH_aplikacija"></a>
+  <a target="code" href="///C:/Users/marco/Documents/MarkoG-RS-vje-be/MarkoG_RS_Checkpoint1/SZRH_aplikacija/__init__.py" type="text/plain"><tt>SZRH_aplikacija</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imported by:
+    <a href="#SZRH_aplikacija.data">SZRH_aplikacija.data</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="SZRH_aplikacija.data"></a>
+  <a target="code" href="///C:/Users/marco/Documents/MarkoG-RS-vje-be/MarkoG_RS_Checkpoint1/SZRH_aplikacija/data/__init__.py" type="text/plain"><tt>SZRH_aplikacija.data</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#SZRH_aplikacija">SZRH_aplikacija</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#SZRH_aplikacija.data.models">SZRH_aplikacija.data.models</a>
+ &#8226;   <a href="#SZRH_aplikacija.data.storage">SZRH_aplikacija.data.storage</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="SZRH_aplikacija.data.models"></a>
+  <a target="code" href="///C:/Users/marco/Documents/MarkoG-RS-vje-be/MarkoG_RS_Checkpoint1/SZRH_aplikacija/data/models.py" type="text/plain"><tt>SZRH_aplikacija.data.models</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#SZRH_aplikacija.data">SZRH_aplikacija.data</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#SZRH_aplikacija.data.storage">SZRH_aplikacija.data.storage</a>
+ &#8226;   <a href="#cli.py">cli.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="SZRH_aplikacija.data.storage"></a>
+  <a target="code" href="///C:/Users/marco/Documents/MarkoG-RS-vje-be/MarkoG_RS_Checkpoint1/SZRH_aplikacija/data/storage.py" type="text/plain"><tt>SZRH_aplikacija.data.storage</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#SZRH_aplikacija.data">SZRH_aplikacija.data</a>
+ &#8226;   <a href="#SZRH_aplikacija.data.models">SZRH_aplikacija.data.models</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+
+  </div>
+  <div class="import">
 imported by:
     <a href="#cli.py">cli.py</a>
 
@@ -255,6 +310,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imported by:
     <a href="#_colorize">_colorize</a>
+ &#8226;   <a href="#codeop">codeop</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.metadata._meta">importlib.metadata._meta</a>
  &#8226;   <a href="#importlib.resources.readers">importlib.resources.readers</a>
@@ -882,6 +938,16 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="_sqlite3"></a>
+  <tt>_sqlite3</tt> <span class="moduletype"><tt>C:\Users\marco\AppData\Local\Programs\Python\Python313\DLLs\_sqlite3.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="_sre"></a>
   <tt>_sre</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imports:
@@ -1153,11 +1219,13 @@ imports:
 imported by:
     <a href="#ast">ast</a>
  &#8226;   <a href="#calendar">calendar</a>
+ &#8226;   <a href="#code">code</a>
  &#8226;   <a href="#dis">dis</a>
  &#8226;   <a href="#gzip">gzip</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#py_compile">py_compile</a>
  &#8226;   <a href="#random">random</a>
+ &#8226;   <a href="#sqlite3.__main__">sqlite3.__main__</a>
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tokenize">tokenize</a>
  &#8226;   <a href="#zipfile">zipfile</a>
@@ -1276,6 +1344,7 @@ imported by:
   <tt>builtins</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
     <a href="#bz2">bz2</a>
+ &#8226;   <a href="#code">code</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#enum">enum</a>
  &#8226;   <a href="#gettext">gettext</a>
@@ -1335,6 +1404,27 @@ imports:
 imported by:
     <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#email._parseaddr">email._parseaddr</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="code"></a>
+  <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/code.py" type="text/plain"><tt>code</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#argparse">argparse</a>
+ &#8226;   <a href="#builtins">builtins</a>
+ &#8226;   <a href="#codeop">codeop</a>
+ &#8226;   <a href="#readline">readline</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#traceback">traceback</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#sqlite3.__main__">sqlite3.__main__</a>
 
   </div>
 
@@ -1479,6 +1569,23 @@ imported by:
  &#8226;   <a href="#json">json</a>
  &#8226;   <a href="#pickle">pickle</a>
  &#8226;   <a href="#tokenize">tokenize</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="codeop"></a>
+  <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/codeop.py" type="text/plain"><tt>codeop</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#code">code</a>
 
   </div>
 
@@ -1644,17 +1751,6 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="data"></a>
-  <a target="code" href="" type="text/plain"><tt>data</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
-imported by:
-    <a href="#cli.py">cli.py</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="dataclasses"></a>
   <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/dataclasses.py" type="text/plain"><tt>dataclasses</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -1690,9 +1786,11 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#_strptime">_strptime</a>
+    <a href="#SZRH_aplikacija.data.storage">SZRH_aplikacija.data.storage</a>
+ &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#email.utils">email.utils</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
 
   </div>
 
@@ -6058,7 +6156,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#_colorize">_colorize</a>
+    <a href="#SZRH_aplikacija.data.storage">SZRH_aplikacija.data.storage</a>
+ &#8226;   <a href="#_colorize">_colorize</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#bz2">bz2</a>
@@ -6544,6 +6643,18 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="readline"></a>
+  <a target="code" href="" type="text/plain"><tt>readline</tt></a>
+<span class="moduletype">MissingModule</span>  <div class="import">
+imported by:
+    <a href="#code">code</a>
+ &#8226;   <a href="#sqlite3.__main__">sqlite3.__main__</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="reprlib"></a>
   <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/reprlib.py" type="text/plain"><tt>reprlib</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -6679,6 +6790,88 @@ imports:
   <div class="import">
 imported by:
     <a href="#email.utils">email.utils</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="sqlite3"></a>
+  <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/sqlite3/__init__.py" type="text/plain"><tt>sqlite3</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#sqlite3.__main__">sqlite3.__main__</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
+ &#8226;   <a href="#sqlite3.dump">sqlite3.dump</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#SZRH_aplikacija.data.storage">SZRH_aplikacija.data.storage</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#sqlite3.__main__">sqlite3.__main__</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
+ &#8226;   <a href="#sqlite3.dump">sqlite3.dump</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="sqlite3.__main__"></a>
+  <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/sqlite3/__main__.py" type="text/plain"><tt>sqlite3.__main__</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#argparse">argparse</a>
+ &#8226;   <a href="#code">code</a>
+ &#8226;   <a href="#readline">readline</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#textwrap">textwrap</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#sqlite3">sqlite3</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="sqlite3.dbapi2"></a>
+  <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/sqlite3/dbapi2.py" type="text/plain"><tt>sqlite3.dbapi2</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#'collections.abc'">'collections.abc'</a>
+ &#8226;   <a href="#_sqlite3">_sqlite3</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#sqlite3">sqlite3</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="sqlite3.dump"></a>
+  <a target="code" href="///C:/Users/marco/AppData/Local/Programs/Python/Python313/Lib/sqlite3/dump.py" type="text/plain"><tt>sqlite3.dump</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#sqlite3">sqlite3</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#sqlite3">sqlite3</a>
 
   </div>
 
@@ -6897,6 +7090,7 @@ imported by:
  &#8226;   <a href="#ast">ast</a>
  &#8226;   <a href="#base64">base64</a>
  &#8226;   <a href="#calendar">calendar</a>
+ &#8226;   <a href="#code">code</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#contextlib">contextlib</a>
@@ -6940,6 +7134,7 @@ imported by:
  &#8226;   <a href="#selectors">selectors</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#sqlite3.__main__">sqlite3.__main__</a>
  &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#tarfile">tarfile</a>
@@ -7031,6 +7226,7 @@ imported by:
     <a href="#argparse">argparse</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.metadata._adapters">importlib.metadata._adapters</a>
+ &#8226;   <a href="#sqlite3.__main__">sqlite3.__main__</a>
  &#8226;   <a href="#traceback">traceback</a>
 
   </div>
@@ -7087,6 +7283,7 @@ imported by:
  &#8226;   <a href="#gzip">gzip</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#random">random</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#threading">threading</a>
@@ -7275,6 +7472,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#cli.py">cli.py</a>
+ &#8226;   <a href="#code">code</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#py_compile">py_compile</a>
  &#8226;   <a href="#threading">threading</a>
@@ -7459,6 +7657,7 @@ imported by:
  &#8226;   <a href="#ast">ast</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#cli.py">cli.py</a>
+ &#8226;   <a href="#codeop">codeop</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#enum">enum</a>
  &#8226;   <a href="#functools">functools</a>
@@ -7478,6 +7677,8 @@ imported by:
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#re._parser">re._parser</a>
+ &#8226;   <a href="#sqlite3">sqlite3</a>
+ &#8226;   <a href="#sqlite3.dbapi2">sqlite3.dbapi2</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
  &#8226;   <a href="#sre_constants">sre_constants</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
