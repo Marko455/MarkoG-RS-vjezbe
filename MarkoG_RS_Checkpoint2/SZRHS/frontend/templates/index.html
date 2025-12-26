@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel Booking System</title>
+
+  <!-- Auth0 SPA SDK -->
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🏨 Hotel Booking System</h1>
+
+  <!-- ---------- AUTH ---------- -->
+  <section>
+    <button id="loginBtn">Login</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
+    <p id="userInfo"></p>
+  </section>
+
+  <!-- ---------- HOTELS ---------- -->
+  <section>
+    <h2>Hotels</h2>
+    <button onclick="loadHotels()">Load Hotels</button>
+    <pre id="hotels"></pre>
+  </section>
+
+  <!-- ---------- AVAILABILITY ---------- -->
+  <section>
+    <h2>Check Availability</h2>
+    <input id="room_id" placeholder="Room ID">
+    <input id="from" placeholder="From (YYYY-MM-DD)">
+    <input id="to" placeholder="To (YYYY-MM-DD)">
+    <br>
+    <button onclick="checkAvailability()">Check</button>
+    <pre id="availability"></pre>
+  </section>
+
+  <!-- ---------- BOOKING ---------- -->
+  <section>
+    <h2>Create Booking</h2>
+    <input id="book_room_id" placeholder="Room ID">
+    <input id="book_from" placeholder="From (YYYY-MM-DD)">
+    <input id="book_to" placeholder="To (YYYY-MM-DD)">
+    <br>
+    <button onclick="createBooking()">Book</button>
+    <pre id="booking"></pre>
+  </section>
+
+  <div class="footer">
+    Microservice-based Hotel Booking System
+  </div>
+
+</div>
+
+<!-- ================= AUTH0 LOGIC ================= -->
+<script>
+let auth0Client = null;
+let accessToken = null;
+let currentUser = null;
+
+const auth0Config = {
+  domain: "dev-kh1htsptammwkztq.us.auth0.com",
+  clientId: "GsPYmgKM2DCNPwcsRvp5DzcIOZafHh0X",
+  authorizationParams: {
+    redirect_uri: window.location.origin,
+    audience: "https://hotel-booking-api"
+  }
+};
+
+async function initAuth0() {
+  auth0Client = await auth0.createAuth0Client(auth0Config);
+
+  // Handle redirect callback
+  if (window.location.search.includes("code=")) {
+    await auth0Client.handleRedirectCallback();
+    window.history.replaceState({}, document.title, "/");
+  }
+
+  const isAuthenticated = await auth0Client.isAuthenticated();
+
+  if (isAuthenticated) {
+    accessToken = await auth0Client.getTokenSilently();
+    currentUser = await auth0Client.getUser();
+
+    document.getElementById("loginBtn").style.display = "none";
+    document.getElementById("logoutBtn").style.display = "inline";
+    document.getElementById("userInfo").textContent =
+      `Logged in as ${currentUser.email}`;
+  }
+}
+
+document.getElementById("loginBtn").onclick = async () => {
+  await auth0Client.loginWithRedirect();
+};
+
+document.getElementById("logoutBtn").onclick = () => {
+  auth0Client.logout({
+    logoutParams: { returnTo: window.location.origin }
+  });
+};
+
+window.onload = initAuth0;
+</script>
+
+<!-- ================= APP LOGIC ================= -->
+<script>
+const CATALOG = "http://localhost:8002";
+const AVAILABILITY = "http://localhost:8003";
+const BOOKING = "http://localhost:8004";
+
+function authHeaders() {
+  return accessToken
+    ? {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${accessToken}`
+      }
+    : { "Content-Type": "application/json" };
+}
+
+async function loadHotels() {
+  const res = await fetch(`${CATALOG}/hotels`);
+  const data = await res.json();
+  document.getElementById("hotels").textContent =
+    JSON.stringify(data, null, 2);
+}
+
+async function checkAvailability() {
+  const roomId = document.getElementById("room_id").value;
+  const from = document.getElementById("from").value;
+  const to = document.getElementById("to").value;
+
+  const res = await fetch(
+    `${AVAILABILITY}/availability?room_id=${roomId}&from=${from}&to=${to}`
+  );
+  const data = await res.json();
+  document.getElementById("availability").textContent =
+    JSON.stringify(data, null, 2);
+}
+
+async function createBooking() {
+  if (!currentUser) {
+    alert("Please login first");
+    return;
+  }
+
+  const payload = {
+    user_id: currentUser.sub,
+    room_id: parseInt(document.getElementById("book_room_id").value),
+    date_from: document.getElementById("book_from").value,
+    date_to: document.getElementById("book_to").value
+  };
+
+  const res = await fetch(`${BOOKING}/bookings`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  document.getElementById("booking").textContent =
+    JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>
