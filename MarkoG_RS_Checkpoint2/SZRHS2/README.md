@@ -21,4 +21,4 @@ Pokretanje aplikacije:
 1. Svaki servis se pokreće zasebno, što znači da moraš otvoriti terminal na putanji svakog direktorija servisa u kojoj se
    nalaze njegove datoteke, ako pokrećeš po prvi put, onda moraš prvo unijeti naredbu "python init_db.py" i onda "python app.py"
    Ponovi iste naredbe za ostala dva servisa. Za pokretanje Tkinter korisničkog sučelja trebaš otvoriti njegov direktorij u
-   terminalu i unijeti naredbe "python ui.py" i to je to.
+   terminalu i unijeti naredbe "python ui.py".
