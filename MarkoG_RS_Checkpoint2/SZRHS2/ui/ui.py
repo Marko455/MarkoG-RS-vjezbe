@@ -6,7 +6,6 @@ root = tk.Tk()
 root.title("Hotel Reception System")
 root.geometry("500x600")
 
-# --- Add Guest ---
 tk.Label(root, text="Add Guest", font=("Arial", 14)).pack()
 
 guest_name = tk.Entry(root)
@@ -22,7 +21,6 @@ def add_guest():
 tk.Button(root, text="Add Guest", command=add_guest).pack(pady=5)
 
 
-# --- Add Room ---
 tk.Label(root, text="Add Room", font=("Arial", 14)).pack()
 
 room_number = tk.Entry(root)
@@ -40,8 +38,6 @@ def add_room():
 
 tk.Button(root, text="Add Room", command=add_room).pack(pady=5)
 
-
-# --- Rooms List ---
 tk.Label(root, text="Rooms", font=("Arial", 14)).pack()
 
 room_list = tk.Listbox(root, width=60)
@@ -56,7 +52,6 @@ def refresh_rooms():
 tk.Button(root, text="Refresh Rooms", command=refresh_rooms).pack(pady=5)
 
 
-# --- Check-in ---
 tk.Label(root, text="Check-in", font=("Arial", 14)).pack()
 
 ci_guest = tk.Entry(root)
@@ -75,7 +70,6 @@ def check_in():
 tk.Button(root, text="Check In", command=check_in).pack(pady=5)
 
 
-# --- Check-out ---
 tk.Label(root, text="Check-out", font=("Arial", 14)).pack()
 
 co_res = tk.Entry(root)
