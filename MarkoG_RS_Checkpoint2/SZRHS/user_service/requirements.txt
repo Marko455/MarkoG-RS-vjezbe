@@ -1,5 +1,0 @@
-aiohttp
-aiosqlite
-python-jose
-cryptography
-requests
