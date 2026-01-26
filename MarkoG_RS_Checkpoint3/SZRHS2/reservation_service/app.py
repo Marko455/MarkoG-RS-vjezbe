@@ -6,7 +6,7 @@ from datetime import date
 import httpx
 
 DB = "reservations.db"
-ROOM_SERVICE = "http://localhost:8001"
+ROOM_SERVICE = "http://room_service:8001"
 
 app = FastAPI()
 

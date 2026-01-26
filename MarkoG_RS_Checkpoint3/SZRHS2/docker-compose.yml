@@ -1,0 +1,29 @@
+services:
+  rooms:
+    build: ./room_service
+    container_name: room_service
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./room_service/rooms.db
+    command: uvicorn app:app --host 0.0.0.0 --port 8001
+
+  guests:
+    build: ./guest_service
+    container_name: guest_service
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./guest_service/guests.db
+    command: uvicorn app:app --host 0.0.0.0 --port 8002
+
+  reservations:
+    build: ./reservation_service
+    container_name: reservation_service
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./reservation_service/reservations.db
+    command: uvicorn app:app --host 0.0.0.0 --port 8003
+    depends_on:
+      - room_service

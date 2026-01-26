@@ -1,8 +1,8 @@
 import requests
 
-ROOM_SERVICE = "http://localhost:8001"
-GUEST_SERVICE = "http://localhost:8002"
-RESERVATION_SERVICE = "http://localhost:8003"
+ROOM_SERVICE = "http://room_service:8001"
+GUEST_SERVICE = "http://guest_service:8002"
+RESERVATION_SERVICE = "http://reservation_service:8003"
 
 
 def add_guest(name, email):

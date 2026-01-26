@@ -1,0 +1,3 @@
+room_service: docker run -p 8081:8001 room_service:1.0
+guest_service: docker run -p 8082:8002 guest_service:1.0
+reservation_service: docker run -p 8083:8003 reservation_service:1.0
